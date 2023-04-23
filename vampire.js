@@ -93,19 +93,15 @@ class Vampire {
   // * when comparing Ansel and Sarah, Ansel is the closest common anscestor.
   // * when comparing Ansel and Andrew, Ansel is the closest common anscestor.
   closestCommonAncestor(vampire) {
-    // equalize vampire distance from the original vampire in terms of ancestors
-    // if equalizing results in either this or vampire being currVamp then ...
-    // once equal, start checking if the next ancestor is shared or this or vamp would be currVamp
-    
-    // or, to make it simpler, could just check the lineage of each vamp without getting to equality yet and find the one (common vamp, or one of the vamps) that would have the greatest numVampiresAwayFromOriginal
-    // though this would involve making possibly an array ... so will equalize instead and then if not one of the vamps is found on equalizing, consecutively check ancestors until a common ancestor is found (or one of the vamps is found ... actually, this wouldn't happen)
-    // though equalizing would involve finding the distance, which would involve traversal as well although not building an array which could take more time and space
+    // equalize vampire distance from the original vampire in terms of number of ancestors
+    // if equalizing results in either this or vampire being currVamp then return that vampire
+    // once equal, start checking if the next ancestor is shared repeatedly and return the ancestor once a common parent is found
     const thisDistance = this.numberOfVampiresFromOriginal;
     const otherDistance = vampire.numberOfVampiresFromOriginal;
     let thisAncestVampToCompare = this;
     let otherAncestVampToCompare = vampire;
     if(thisDistance < otherDistance) {
-      // traverse until the other ancestor vamp to compare is equalized in distance to the original
+      // traverse until the other ancestor vamp to compare is equalized in distance from the original
       for(let iter = 0; iter < otherDistance - thisDistance; iter++) {
         otherAncestVampToCompare = otherAncestVampToCompare.creator;
       }
